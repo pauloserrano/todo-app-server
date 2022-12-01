@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDirs": ["./src", "./tests"],
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@types": ["./src/@types/index.ts"],
+      "@config": ["./src/config/index.ts"],
+      "@controllers": ["./src/controllers/index.ts"],
+      "@errors": ["./src/errors/index.ts"],
+      "@middlewares": ["./src/middlewares/index.ts"],
+      "@repositories": ["./src/repositories/index.ts"],
+      "@routes": ["./src/routes/index.ts"],
+      "@schemas": ["./src/schemas/index.ts"],
+      "@services": ["./src/services/*"],
+      "@tests/*": ["./tests/*"]
+    }
+  },
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true
+  },
+  "include": ["src", "tests"]
+}
