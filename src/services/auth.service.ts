@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { unauthorizedError } from "@errors"
+import { internalServerError, unauthorizedError } from "@errors"
 import { sessionRepository, usersRepository } from "@repositories"
 import { UserLogin } from "@types"
 
@@ -10,16 +10,22 @@ const signIn = async (data: UserLogin) => {
     throw unauthorizedError()
   }
 
-  const isPasswordValid = bcrypt.compare(data.password, user.password)
+  const isPasswordValid = await bcrypt.compare(data.password, user.password)
   if (!isPasswordValid){
     throw unauthorizedError()
   }
 
   const payload = { userId: user.id }
   if (!process.env.JWT_SECRET){
-    throw unauthorizedError()
+    throw internalServerError()
   }
 
+  // TODO Review this rule later
+  const hasSession = await sessionRepository.findSessionByUserId(user.id)
+  if (hasSession){
+    await sessionRepository.deleteSessionById(hasSession.id)
+  }
+  
   const token = jwt.sign(payload, process.env.JWT_SECRET)
   await sessionRepository.createSession({ token, userId: user.id })
 
