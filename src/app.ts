@@ -3,12 +3,14 @@ import cors from "cors"
 import setup from "@config"
 setup()
 
-import { usersRouter } from "@routes"
+import { usersRouter } from "src/routers"
+import { handleApplicationErrors } from "@middlewares"
 
 const app = express()
 app
   .use(cors())
   .use(express.json())
   .use("/users", usersRouter)
+  .use(handleApplicationErrors)
 
 export default app

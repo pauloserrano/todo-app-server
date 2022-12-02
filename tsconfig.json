@@ -17,10 +17,11 @@
       "@errors": ["./src/errors/index.ts"],
       "@middlewares": ["./src/middlewares/index.ts"],
       "@repositories": ["./src/repositories/index.ts"],
-      "@routes": ["./src/routes/index.ts"],
+      "@routers": ["src/routers/index.ts"],
       "@schemas": ["./src/schemas/index.ts"],
-      "@services": ["./src/services/*"],
-      "@tests/*": ["./tests/*"]
+      "@services": ["./src/services/index.ts"],
+      "@tests/*": ["./tests/*"],
+      "@*": ["./src/*"]
     }
   },
   "ts-node": {
