@@ -1,27 +1,35 @@
 import bcrypt from "bcrypt"
+import { faker } from "@faker-js/faker"
 import { User } from "@prisma/client"
 import { prisma } from "@config"
 
-async function createUser(params?: Partial<User>): Promise<User> {
-  const incomingPassword = params?.password || "123"
-  const hashedPassword = await bcrypt.hash(incomingPassword, 10)
+async function createUser(params?: Omit<User, "id">): Promise<User> {
+  const { name, email, password } = params || (getMockUser())
+  const hash = await bcrypt.hash(password, 10)
 
-  return prisma.user.create({
-    data: {
-      name: params?.name || "John Doe",
-      email: params?.email || "test@test.com",
-      password: hashedPassword
-    },
+  const { id } = await prisma.user.create({
+    data: { name, email, password: hash }
   })
+
+  return { id, name, email, password }
 }
 
-async function cleanDb(): Promise<void> {
-  await prisma.user.deleteMany({})
+function deleteUser(id: User["id"]){
+  return prisma.user.delete({ where: { id } })
+}
+
+function getMockUser(): Omit<User, "id"> {
+  return {
+    name: faker.name.fullName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
+  }
 }
 
 const usersFactory = {
   createUser,
-  cleanDb
+  getMockUser,
+  deleteUser
 }
 
-export default usersFactory
+export { usersFactory }

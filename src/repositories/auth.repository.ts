@@ -18,9 +18,15 @@ const findSessionByToken = (token: Session["token"]) => {
   })
 }
 
-const deleteSessionById = async (id: Session["id"]) => {
+const deleteSessionById = (id: Session["id"]) => {
   return prisma.session.delete({
     where: { id }
+  })
+}
+
+const deleteSessionByToken = (token: Session["token"]) => {
+  return prisma.session.delete({
+    where: { token }
   })
 }
 
@@ -28,7 +34,8 @@ const sessionRepository = {
   createSession,
   findSessionByUserId,
   findSessionByToken,
-  deleteSessionById
+  deleteSessionById,
+  deleteSessionByToken
 }
 
 export { sessionRepository }

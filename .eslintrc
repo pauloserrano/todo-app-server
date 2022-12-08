@@ -15,7 +15,7 @@
     "rules": {
         "semi": ["error", "never"],
         "quotes": ["error", "double"],
-        "indent": ["error", 2],
+        "indent": ["error", 2, { "SwitchCase": 1 }],
         "eol-last": ["error", "always"],
         "no-console": "warn",
         "comma-spacing": ["error", { "before": false, "after": true }],
@@ -23,6 +23,6 @@
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "space-before-function-paren": ["error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
         "arrow-spacing": ["error", { "before": true, "after": true }],
-        "object-curly-spacing": ["error", "always"]
+        "object-curly-spacing": ["error", "always"],
     }
 }

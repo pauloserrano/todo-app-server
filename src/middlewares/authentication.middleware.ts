@@ -1,30 +1,30 @@
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction as Next } from "express"
-import { internalServerError, unauthorizedError } from "@errors"
+import { unauthorizedError } from "@errors"
 import { sessionRepository } from "@repositories"
 import { JWTPayload } from "@types"
 
-export async function authenticateToken(req: Request, res: Response, next: Next){
+export async function authenticateToken(req: Request, res: Response, next: Next) {
   const auth = req.header("Authorization")
 
   try {
-    if (!auth){
+    if (!auth) {
       throw unauthorizedError("No Authorization header")
     }
-    
-    if (!process.env.JWT_SECRET){
-      throw internalServerError("Token could not be validated")
-    }
-    
+
     const token = auth.replace("Bearer ", "")
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload
+
     const session = await sessionRepository.findSessionByToken(token)
-    if (!session){
+    if (!session) {
       throw unauthorizedError("User has no session")
     }
-    
-    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload
-    res.locals.userId = userId
-    
+
+    res.locals = {
+      userId,
+      token
+    }
+
     return next()
   } catch (error) {
     return next(error)

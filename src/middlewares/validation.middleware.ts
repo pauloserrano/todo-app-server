@@ -19,7 +19,7 @@ function validate(schema: ObjectSchema, type: "body" | "params") {
       const details = error.details.map(err => err.message)
       return res.status(httpStatus.BAD_REQUEST).send(badRequestError(`Invalid ${type}.`, details))
     }
-    
+
     return next()
   }
 }
