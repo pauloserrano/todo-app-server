@@ -37,7 +37,7 @@ const deleteUser = (id: User["id"]) => {
   })
 }
 
-const usersRepository = {
+const userRepository = {
   findUsers,
   findUserById,
   findUserByEmail,
@@ -46,4 +46,4 @@ const usersRepository = {
   deleteUser
 }
 
-export { usersRepository } 
+export { userRepository } 

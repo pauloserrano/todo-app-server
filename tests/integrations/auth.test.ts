@@ -1,7 +1,7 @@
 import supertest from "supertest"
 import httpStatus from "http-status"
 import app from "@src/app"
-import { usersFactory } from "@tests/factories"
+import { userFactory } from "@tests/factories"
 import { wipeDb } from "@tests/helpers"
 
 const api = supertest(app)
@@ -20,7 +20,7 @@ describe("POST /auth/signin", () => {
 
   describe("When body is valid", () => {
     it("[401] When email does not exist", async () => {
-      const { email, password } = usersFactory.getMockUser()
+      const { email, password } = userFactory.getMockUser()
       const body = { email, password }
       const response = await api.post("/auth/signin").send(body)
 
@@ -28,8 +28,8 @@ describe("POST /auth/signin", () => {
     })
 
     it("[401] When password is invalid", async () => {
-      const { email } = await usersFactory.createUser()
-      const { password } = usersFactory.getMockUser()
+      const { email } = await userFactory.createUser()
+      const { password } = userFactory.getMockUser()
       const body = { email, password }
       const response = await api.post("/auth/signin").send(body)
 
@@ -37,7 +37,7 @@ describe("POST /auth/signin", () => {
     })
 
     it("[200] Should respond with a session token and user data", async () => {
-      const { email, password } = await usersFactory.createUser()
+      const { email, password } = await userFactory.createUser()
       const body = { email, password }
       const response = await api.post("/auth/signin").send(body)
 

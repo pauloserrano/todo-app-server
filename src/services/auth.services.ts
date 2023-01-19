@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { unauthorizedError } from "@errors"
-import { sessionRepository, usersRepository } from "@repositories"
+import { sessionRepository, userRepository } from "@repositories"
 import { UserLogin } from "@types"
 import { exclude } from "@src/helpers"
 
 const signIn = async (data: UserLogin) => {
-  const user = await usersRepository.findUserByEmail(data.email)
+  const user = await userRepository.findUserByEmail(data.email)
   if (!user) {
     throw unauthorizedError()
   }

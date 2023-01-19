@@ -14,7 +14,7 @@ async function createUser(params?: Omit<User, "id">): Promise<User> {
   return { id, name, email, password }
 }
 
-function deleteUser(id: User["id"]){
+function deleteUser(id: User["id"]) {
   return prisma.user.delete({ where: { id } })
 }
 
@@ -26,10 +26,10 @@ function getMockUser(): Omit<User, "id"> {
   }
 }
 
-const usersFactory = {
+const userFactory = {
   createUser,
   getMockUser,
   deleteUser
 }
 
-export { usersFactory }
+export { userFactory }

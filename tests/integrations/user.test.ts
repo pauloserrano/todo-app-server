@@ -3,7 +3,7 @@ import httpStatus from "http-status"
 import jwt from "jsonwebtoken"
 import app from "@src/app"
 import { wipeDb } from "@tests/helpers"
-import { authFactory, usersFactory } from "@tests/factories"
+import { authFactory, userFactory } from "@tests/factories"
 import { faker } from "@faker-js/faker"
 
 const api = supertest(app)
@@ -22,7 +22,7 @@ describe("GET /users", () => {
   })
 
   it("[200] Should respond with an array of users", async () => {
-    const user = await usersFactory.createUser()
+    const user = await userFactory.createUser()
     const response = await api.get("/users")
 
     expect(response.status).toBe(httpStatus.OK)
@@ -49,7 +49,7 @@ describe("GET /users/:userId", () => {
   })
 
   it("[200] Should respond with an user with the correct id", async () => {
-    const user = await usersFactory.createUser()
+    const user = await userFactory.createUser()
     const response = await api.get(`/users/${user.id}`)
 
     expect(response.status).toBe(200)
@@ -71,8 +71,8 @@ describe("POST /users", () => {
 
   describe("When body is valid", () => {
     it("[409] When email is already in use", async () => {
-      const { email } = await usersFactory.createUser()
-      const { name, password } = usersFactory.getMockUser()
+      const { email } = await userFactory.createUser()
+      const { name, password } = userFactory.getMockUser()
       const body = { email, name, password }
       const response = await api.post("/users").send(body)
 
@@ -80,7 +80,7 @@ describe("POST /users", () => {
     })
 
     it("[201] Should create a new user", async () => {
-      const user = usersFactory.getMockUser()
+      const user = userFactory.getMockUser()
       const response = await api.post("/users").send(user)
 
       expect(response.status).toBe(httpStatus.CREATED)
@@ -102,7 +102,7 @@ describe("PATCH /users", () => {
   })
 
   describe("When body is valid", () => {
-    const body = usersFactory.getMockUser()
+    const body = userFactory.getMockUser()
 
     it("[401] When no token was given", async () => {
       const response = await api.patch("/users").send(body)
@@ -117,7 +117,7 @@ describe("PATCH /users", () => {
     })
 
     it("[401] When given token has no related session", async () => {
-      const { id: userId } = await usersFactory.createUser()
+      const { id: userId } = await userFactory.createUser()
       const token = jwt.sign({ userId }, process.env.JWT_SECRET)
       const response = await api.patch("/users").set("Authorization", `Bearer ${token}`).send(body)
 
@@ -126,7 +126,7 @@ describe("PATCH /users", () => {
 
     describe("When token is valid", () => {
       it("[200] Should respond with updated user data", async () => {
-        const user = await usersFactory.createUser()
+        const user = await userFactory.createUser()
         const token = await authFactory.createSession(user)
         const response = await api.patch("/users").set("Authorization", `Bearer ${token}`).send(body)
 
@@ -155,7 +155,7 @@ describe("DELETE /users", () => {
   })
 
   it("[401] When given token has no related session", async () => {
-    const { id: userId } = await usersFactory.createUser()
+    const { id: userId } = await userFactory.createUser()
     const token = jwt.sign({ userId }, process.env.JWT_SECRET)
     const response = await api.delete("/users").set("Authorization", `Bearer ${token}`)
 
@@ -164,7 +164,7 @@ describe("DELETE /users", () => {
 
   describe("When token is valid", () => {
     it("[200] Should delete the user", async () => {
-      const user = await usersFactory.createUser()
+      const user = await userFactory.createUser()
       const token = await authFactory.createSession(user)
       const response = await api.delete("/users").set("Authorization", `Bearer ${token}`)
       const after = await api.get(`/users/${user.id}`)

@@ -1,3 +1,3 @@
-export * from "./users.repository"
+export * from "./user.repository"
 export * from "./auth.repository"
-export * from "./todos.repository"
+export * from "./todo.repository"
