@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/server.js",
-    "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify ./src/server.ts",
+    "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --exit-child --ignore-watch node_modules --no-notify ./src/server.ts",
     "dev:seed": "npm run dev:load-envs prisma db seed",
     "dev:migration": "npm run dev:load-envs npm run migration:dev",
     "dev:load-envs": "dotenv -e .env.development",

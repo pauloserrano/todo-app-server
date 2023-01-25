@@ -3,3 +3,5 @@ export function exclude<T, K extends keyof T>(data: T, keys: K[]): Omit<T, K> {
 
   return data
 }
+
+export type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> & Pick<T, TRequired>

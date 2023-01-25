@@ -23,7 +23,7 @@ const signIn = async (data: UserLogin) => {
   }
 
   const payload = { userId: user.id }
-  const token = jwt.sign(payload, process.env.JWT_SECRET)
+  const token = jwt.sign(payload, process.env.JWT_SECRET as string)
   await sessionRepository.createSession({ token, userId: user.id })
 
   return { user: exclude(user, ["id", "password"]), token }

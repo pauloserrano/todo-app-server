@@ -29,7 +29,8 @@ model Session {
 model Todo {
   id           Int      @id @default(autoincrement())
   userId       Int
-  content      String
+  name         String
+  description  String?
   isFinished   Boolean  @default(false)
   createdAt    DateTime @default(now())
   lastEditedAt DateTime @updatedAt

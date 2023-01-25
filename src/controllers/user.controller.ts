@@ -15,7 +15,7 @@ export async function getUserById(req: Request, res: Response, next: Next) {
   const { userId } = req.params
 
   try {
-    const user = await userService.getUserById(userId)
+    const user = await userService.getUserById(+userId)
     res.status(httpStatus.OK).send(user)
   } catch (error) {
     next(error)
@@ -37,7 +37,7 @@ export async function updateUser(req: Request, res: Response, next: Next) {
   const { userId } = res.locals
 
   try {
-    const user = await userService.updateUser(userId, req.body)
+    const user = await userService.updateUser(+userId, req.body)
     res.status(httpStatus.OK).send({
       name: user.name,
       email: user.email
@@ -47,11 +47,11 @@ export async function updateUser(req: Request, res: Response, next: Next) {
   }
 }
 
-export async function deleteUser(req: Request, res: Response, next: Next) {
+export async function deleteUser(_req: Request, res: Response, next: Next) {
   const { userId, token } = res.locals as Record<string, string>
 
   try {
-    await userService.deleteUser(userId, token)
+    await userService.deleteUser(+userId, token)
     res.sendStatus(httpStatus.OK)
   } catch (error) {
     next(error)

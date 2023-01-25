@@ -5,15 +5,18 @@ import { sessionRepository } from "@repositories"
 import { JWTPayload } from "@types"
 
 export async function authenticateToken(req: Request, res: Response, next: Next) {
-  const auth = req.header("Authorization")
-
   try {
+    const auth = req.header("Authorization")
     if (!auth) {
       throw unauthorizedError("No Authorization header")
     }
 
     const token = auth.replace("Bearer ", "")
-    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload
+    if (!token) {
+      throw unauthorizedError("No token")
+    }
+
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET as string) as JWTPayload
 
     const session = await sessionRepository.findSessionByToken(token)
     if (!session) {

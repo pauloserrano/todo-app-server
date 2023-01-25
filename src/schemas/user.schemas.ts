@@ -14,6 +14,6 @@ export const updateUserSchema = Joi.object<Partial<Omit<User, "id">> & { newPass
   newPassword: Joi.string()
 })
 
-export const userIdSchema = Joi.object<{userId: string}>({
-  userId: Joi.string().uuid().required()
+export const userIdSchema = Joi.object<{ userId: number }>({
+  userId: Joi.number().required()
 })

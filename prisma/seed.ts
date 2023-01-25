@@ -3,14 +3,14 @@ const prisma = new PrismaClient()
 
 async function createUser() {
   return prisma.user.create({
-      data: {
-        email: 'alice@prisma.io',
-        name: 'Alice',
-        password: "132",
-        Todo: {
-          create: { content: 'Workout' }
-        },
+    data: {
+      email: 'john@prisma.io',
+      name: 'John Doe',
+      password: "132",
+      Todo: {
+        create: { content: 'Lorem Ipsum' }
       },
+    },
   })
 }
 

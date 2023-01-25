@@ -22,7 +22,7 @@ const createUser = (data: UserCreate) => {
   return prisma.user.create({ data })
 }
 
-const updateUser = (id: string, data: Partial<UserCreate>) => {
+const updateUser = (id: User["id"], data: Partial<UserCreate>) => {
   return prisma.user.update({
     where: { id },
     data: {

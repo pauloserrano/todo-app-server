@@ -1,7 +1,7 @@
-import { ApplicationError } from "@types"
-import { NextFunction, Request, Response } from "express"
-import { badRequestError, conflictError, internalServerError, JWTError, notFoundError, unauthorizedError } from "@errors"
 import httpStatus from "http-status"
+import { NextFunction, Request, Response } from "express"
+import { ApplicationError } from "@types"
+import { badRequestError, conflictError, internalServerError, JWTError, notFoundError, unauthorizedError } from "@errors"
 
 export function handleApplicationErrors(error: ApplicationError, _req: Request, res: Response, _next: NextFunction) {
   console.log(error)
