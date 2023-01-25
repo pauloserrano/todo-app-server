@@ -13,6 +13,18 @@ export async function getTodos(_req: Request, res: Response, next: Next) {
   }
 }
 
+export async function getTodoById(req: Request, res: Response, next: Next) {
+  const { id } = req.params
+  const { userId } = res.locals
+
+  try {
+    const todo = await todoServices.getTodoById(+id, +userId)
+    res.status(httpStatus.OK).send(todo)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export async function postTodo(req: Request, res: Response, next: Next) {
   const { userId } = res.locals
 

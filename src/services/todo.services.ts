@@ -8,6 +8,10 @@ const getTodosByUserId = async (userId: Todo["userId"]) => {
   return todoRepository.findTodosByUserId(userId)
 }
 
+const getTodoById = async (id: Todo["id"], userId: Todo["userId"]) => {
+  return todoRepository.findTodoById(id, userId)
+}
+
 const createTodo = async (userId: Todo["userId"], data: TodoCreate) => {
   const user = await userRepository.findUserById(userId)
   if (!user) {
@@ -31,6 +35,7 @@ const deleteTodo = async (id: Todo["id"]) => {
 
 const todoService = {
   getTodosByUserId,
+  getTodoById,
   createTodo,
   updateTodo,
   deleteTodo

@@ -4,7 +4,29 @@ import { prisma } from "@src/config"
 
 const findTodosByUserId = (userId: Todo["userId"]) => {
   return prisma.todo.findMany({
-    where: { userId }
+    where: { userId },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      isFinished: true,
+      createdAt: true,
+      lastEditedAt: true
+    }
+  })
+}
+
+const findTodoById = (id: Todo["id"], userId: Todo["userId"]) => {
+  return prisma.todo.findFirst({
+    where: { id, userId },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      isFinished: true,
+      createdAt: true,
+      lastEditedAt: true
+    }
   })
 }
 
@@ -33,6 +55,7 @@ const deleteAllTodosByUserId = (userId: Todo["userId"]) => {
 
 const todoRepository = {
   findTodosByUserId,
+  findTodoById,
   createTodo,
   updateTodo,
   deleteTodo,
