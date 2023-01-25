@@ -13,7 +13,3 @@ export const updateUserSchema = Joi.object<Partial<Omit<User, "id">> & { newPass
   password: Joi.string(),
   newPassword: Joi.string()
 })
-
-export const userIdSchema = Joi.object<{ userId: number }>({
-  userId: Joi.number().required()
-})

@@ -24,9 +24,9 @@ const deleteSessionById = (id: Session["id"]) => {
   })
 }
 
-const deleteSessionByToken = (token: Session["token"]) => {
-  return prisma.session.delete({
-    where: { token }
+const deleteSessionByUserId = (userId: Session["userId"]) => {
+  return prisma.session.deleteMany({
+    where: { userId }
   })
 }
 
@@ -35,7 +35,7 @@ const sessionRepository = {
   findSessionByUserId,
   findSessionByToken,
   deleteSessionById,
-  deleteSessionByToken
+  deleteSessionByUserId
 }
 
 export { sessionRepository }

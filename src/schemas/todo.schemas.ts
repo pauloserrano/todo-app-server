@@ -6,8 +6,8 @@ export const newTodoSchema = Joi.object<TodoCreate>({
   description: Joi.string()
 })
 
-export const updateTodoSchema = Joi.object<Partial<TodoUpdate>>({
+export const updateTodoSchema = Joi.object<TodoUpdate>({
   name: Joi.string(),
   description: Joi.string(),
   isFinished: Joi.boolean()
-})
+}).min(1)
